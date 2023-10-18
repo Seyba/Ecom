@@ -30,7 +30,7 @@ const createUser = asyncHandler(
     }
 )
 
-//* Log the user
+//* Log In the user
 const loginUserCtr = asyncHandler(
     async(req, res)=> {
         const { email, password} = req.body
@@ -61,6 +61,33 @@ const loginUserCtr = asyncHandler(
         } else {
             throw new Error('Invalid Credentials')
         }
+    }
+)
+
+//* Log Out the User
+const logOut = asyncHandler(
+    async(req, res) => {
+        const cookie = req.cookies
+        if(!cookie?.refreshToken) throw new Error('No new Token in Cookies!')
+
+        const refreshToken = cookie.refreshToken
+        const user = await User.findOne({refreshToken})
+
+        if(!user) {
+            res.clearCookie("resfreshToken", {
+                httpOnly: true,
+                secure: true
+            })
+            return res.sendStatus(204)//* Forbidden
+        }
+        await User.findOneAndUpdate({refreshToken}, {
+            refreshToken: ""
+        })
+        res.clearCookie("resfreshToken", {
+            httpOnly: true,
+            secure: true
+        })
+        return res.sendStatus(204)//* Forbidden
     }
 )
 
@@ -118,6 +145,7 @@ const deleteUser = asyncHandler(
     }
 )
 
+//* Block User
 const blockUser = asyncHandler(
     async(req, res) => {
         const { id } = req.params
@@ -132,6 +160,8 @@ const blockUser = asyncHandler(
         }
     }
 )
+
+//* Unblock User
 const unBlockUser = asyncHandler(
     async(req, res) => {
         const { id } = req.params
@@ -174,6 +204,7 @@ module.exports = {
     getUsers, 
     handleTokenRefresh,
     loginUserCtr, 
+    logOut,
     unBlockUser,
     updateUser
 }

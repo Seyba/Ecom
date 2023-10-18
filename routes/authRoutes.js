@@ -8,6 +8,7 @@ const {
     getUsers, 
     handleTokenRefresh,
     loginUserCtr, 
+    logOut,
     unBlockUser,
     updateUser 
 } = require('../controllers/userCtr')
@@ -15,6 +16,7 @@ const {authMiddleware, isAdmin} = require('../middlewares/authMiddleware')
 
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
+router.get("/logout", logOut)
 router.get("/all-users", getUsers)
 router.get("/refresh", handleTokenRefresh)
 router.get("/:id", authMiddleware, isAdmin, getUser)
