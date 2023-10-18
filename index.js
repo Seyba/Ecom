@@ -4,6 +4,7 @@ const databaseConnection = require('./config/database')
 const logger = require('morgan')
 const authRouter = require('./routes/authRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorHandler')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 4000
 //* Middlewares
 app.use(express.json());
 app.use(logger('dev'))
+app.use(cookieParser())
 
 app.use('/api/user', authRouter)
 

@@ -40,7 +40,10 @@ const userModel = new Schema({
         default: []
     },
     address: [{type: Schema.Types.ObjectId, ref: "Address"}],
-    wishlist: [{type: Schema.Types.ObjectId, ref: "Product"}]
+    wishlist: [{type: Schema.Types.ObjectId, ref: "Product"}],
+    refreshToken: {
+        type: String
+    }
 },{timestamps: true})
 
 userModel.pre("save", async function(next){
