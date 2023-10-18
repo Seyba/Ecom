@@ -6,6 +6,7 @@ const {
     deleteUser,
     getUser, 
     getUsers, 
+    handleTokenRefresh,
     loginUserCtr, 
     unBlockUser,
     updateUser 
@@ -15,6 +16,7 @@ const {authMiddleware, isAdmin} = require('../middlewares/authMiddleware')
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
 router.get("/all-users", getUsers)
+router.get("/refresh", handleTokenRefresh)
 router.get("/:id", authMiddleware, isAdmin, getUser)
 router.delete("/:id", deleteUser)
 router.put("/edit-user", authMiddleware, updateUser)
