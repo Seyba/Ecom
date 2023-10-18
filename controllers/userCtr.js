@@ -72,7 +72,7 @@ const logOut = asyncHandler(
 
         const refreshToken = cookie.refreshToken
         const user = await User.findOne({refreshToken})
-
+        
         if(!user) {
             res.clearCookie("resfreshToken", {
                 httpOnly: true,
@@ -80,13 +80,16 @@ const logOut = asyncHandler(
             })
             return res.sendStatus(204)//* Forbidden
         }
+        
         await User.findOneAndUpdate({refreshToken}, {
             refreshToken: ""
         })
+
         res.clearCookie("resfreshToken", {
             httpOnly: true,
             secure: true
         })
+
         return res.sendStatus(204)//* Forbidden
     }
 )
@@ -113,7 +116,6 @@ const getUser = asyncHandler(
         }catch(e){
             throw new Error(error)
         }
-
     }
 )
 
