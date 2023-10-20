@@ -37,7 +37,7 @@ var productSchema = new mongoose.Schema({
     },
     sold: {
         type: Number,
-        default: 0
+        default: 0,
     }, 
     images: {
         type: Array,
@@ -52,5 +52,6 @@ var productSchema = new mongoose.Schema({
     }]
 }, {timestamps: true});
 
+//* to hide a schema document set {select: false}
 //Export the model
 module.exports = mongoose.model('Product', productSchema);

@@ -21,7 +21,7 @@ const createProduct = asyncHandler(
 const getProducts = asyncHandler(
     async(req, res) => {
         try {
-            const prods = await Product.find()
+            const prods = await Product.find(req.query)
 
             res.json(prods)
         } catch (error) {
