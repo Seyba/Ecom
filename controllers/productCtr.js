@@ -40,6 +40,19 @@ const getProducts = asyncHandler(
                 query = query.sort('-createdAt')
             }
 
+            //* Limiting the fields
+            if(req.query.fields) {
+                const fields = req.query.fields.split(",").join(" ")
+                query = query.select(fields)
+            } else {
+                query = query.select("-v__")
+            }
+
+            //* Pagination
+            const page = req.query.page
+            const limit = req.query.limit
+            const skip = (page - 1) * limit
+            console.log(page, limit, skip)
             const prods = await query
             res.json(prods)
         } catch (error) {
