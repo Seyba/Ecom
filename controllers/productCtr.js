@@ -53,6 +53,8 @@ const getProducts = asyncHandler(
             const limit = req.query.limit
             const skip = (page - 1) * limit
             console.log(page, limit, skip)
+            query = query.skip(skip).limit(limit)
+
             const prods = await query
             res.json(prods)
         } catch (error) {
