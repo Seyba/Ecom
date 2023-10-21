@@ -8,8 +8,8 @@ const sendEmail = asyncHandler(
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-                user: testAccount.process.env.MAIL_ID, // Generated ethereal user 
-                pass: testAccount.process.env.MAIL_PASS, // Generated ethereal password 
+                user: process.env.MAIL_ID, // Generated ethereal user 
+                pass: process.env.MAIL_PASS, // Generated ethereal password 
             }
         })
 
@@ -28,4 +28,4 @@ const sendEmail = asyncHandler(
     }
 )
 
-module.export = sendEmail
+module.exports = sendEmail
