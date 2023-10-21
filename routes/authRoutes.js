@@ -10,10 +10,12 @@ const {
     loginUserCtr, 
     logOut,
     unBlockUser,
-    updateUser 
+    updateUser,
+    updatePassword
 } = require('../controllers/userCtr')
 const {authMiddleware, isAdmin} = require('../middlewares/authMiddleware')
 
+router.put("/password",authMiddleware ,updatePassword)
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
 router.get("/logout", logOut)
