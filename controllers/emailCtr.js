@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler')
 const sendEmail = asyncHandler(
     async(data, req, res) => {
         let transporter = nodeMailer.createTransport({
-            host: "mahamadoutirera347@gmail.com",
+            host: 'smtp.gmail.com',
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
@@ -15,7 +15,7 @@ const sendEmail = asyncHandler(
 
         //* Send Mail with defined tranport object
         let info = await transporter.sendMail({
-            from: '"Fred Foo" <abc@gmil.com>', // Sender address
+            from: '"Hello There" <abc@gmail.com>', // Sender address
             to: data.to, // List of receivers
             subject: data.subject, // Subject line
             text: data.text,
