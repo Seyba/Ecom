@@ -19,7 +19,7 @@ const sendEmail = asyncHandler(
             to: data.to, // List of receivers
             subject: data.subject, // Subject line
             text: data.text,
-            html: data.html, // HTML body
+            htm: data.html, // HTML body
         })
 
         console.log("Message sent: %s", info.messageId)
