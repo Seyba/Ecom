@@ -8,17 +8,18 @@ const sendEmail = asyncHandler(
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-                user: testAccount.user, // Generated ethereal user 
-                pass: testAccount.pass, // Generated ethereal password 
+                user: testAccount.process.env.MAIL_ID, // Generated ethereal user 
+                pass: testAccount.process.env.MAIL_PASS, // Generated ethereal password 
             }
         })
 
         //* Send Mail with defined tranport object
         let info = await transporter.sendMail({
-            from: '"Fred Foo" <foo@example.com>', // Sender address
-            to: "bar@example.com, baz@example.com", // List of receivers
-            subject: "Hello World?", // Subject line
-            html: "<b>Hello World?</b>", // HTML body
+            from: '"Fred Foo" <abc@gmil.com>', // Sender address
+            to: data.to, // List of receivers
+            subject: data.subject, // Subject line
+            text: data.text,
+            html: data.html, // HTML body
         })
 
         console.log("Message sent: %s", info.messageId)
