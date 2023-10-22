@@ -4,8 +4,8 @@ const {isAdmin, authMiddleware} = require('../middlewares/authMiddleware')
 const { createCategory, deleteCategory, getCategories, getCategory, updateCategory } = require('../controllers/prodCategoryCtr')
 
 router.get('/', authMiddleware, isAdmin, getCategories)
-router.post('/', createCategory)
-router.put('/:id', updateCategory)
-router.get('/:id', getCategory)
-router.delete('/:id', deleteCategory)
+router.post('/', authMiddleware, isAdmin, createCategory)
+router.put('/:id', authMiddleware, isAdmin, updateCategory)
+router.get('/:id', authMiddleware, isAdmin, getCategory)
+router.delete('/:id', authMiddleware, isAdmin, deleteCategory)
 module.exports = router
