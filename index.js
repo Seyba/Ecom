@@ -18,7 +18,7 @@ app.use(cookieParser())
 
 app.use('/api/user', authRouter)
 app.use('/api/product', productRouter)
-app.use('/api/', blogRouter)
+app.use('/api/blog', blogRouter)
 // app.get('/', (req, res) => {
 //     res.send({msg: 'Welcome!!!'})
 // })

@@ -3,6 +3,6 @@ const router = express.Router()
 const {isAdmin, authMiddleware} = require('../middlewares/authMiddleware')
 const {createBlog} = require('../controllers/blogCtr')
 
-router.post('/', createBlog)
+router.post('/', authMiddleware, isAdmin, createBlog)
 
 module.exports = router
