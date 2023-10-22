@@ -47,4 +47,17 @@ const getCategories = asyncHandler(
     }
 )
 
-module.exports = {createCategory, deleteCategory, getCategories, updateCategory}
+const getCategory = asyncHandler(
+    async(req, res) => {
+        const { id } = req.params
+        try {
+            const category = await ProductCategory.findById(id)
+            res.json(category)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
+
+module.exports = {createCategory, deleteCategory, getCategories,getCategory, updateCategory}
