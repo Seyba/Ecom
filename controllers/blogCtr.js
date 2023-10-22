@@ -31,7 +31,12 @@ const getBlog = asyncHandler(
         const { id } = req.params
         try{
             const blog = await Blog.findById(id)
-            res.json(blog)
+            const updateViews = await Blog.findByIdAndUpdate(
+                id,
+                {$inc: {numViews: 1}},
+                {new: true}
+            )
+            res.json({blog, updateViews})
         } catch(error){
             throw new Error(error)
         }
@@ -49,4 +54,16 @@ const getBlogs = asyncHandler(
     }
 )
 
-module.exports = { createBlog, getBlog, getBlogs, updateBlog }
+const deleteBlog = asyncHandler(
+    async(req, res) => {
+        const { id } = req.params
+        try{
+            const blog = await Blog.findByIdAndDelete(id)
+            res.json({msg:'blog deleted'})
+        } catch(error){
+            throw new Error(error)
+        }
+    }
+)
+
+module.exports = { createBlog, deleteBlog, getBlog, getBlogs, updateBlog }
