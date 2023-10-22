@@ -3,6 +3,7 @@ require('dotenv').config()
 const databaseConnection = require('./config/database')
 const logger = require('morgan')
 const authRouter = require('./routes/authRoutes')
+const categoryRouter = require('./routes/categoryRoutes')
 const productRouter = require('./routes/productRoute')
 const blogRouter = require('./routes/blogRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorHandler')
@@ -16,12 +17,11 @@ app.use(express.json());
 app.use(logger('dev'))
 app.use(cookieParser())
 
-app.use('/api/user', authRouter)
-app.use('/api/product', productRouter)
+
 app.use('/api/blog', blogRouter)
-// app.get('/', (req, res) => {
-//     res.send({msg: 'Welcome!!!'})
-// })
+app.use('api/category', categoryRouter)
+app.use('/api/product', productRouter)
+app.use('/api/user', authRouter)
 
 app.use(notFound)
 app.use(errorHandler)
