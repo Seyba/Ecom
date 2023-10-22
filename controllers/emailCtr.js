@@ -15,11 +15,11 @@ const sendEmail = asyncHandler(
 
         //* Send Mail with defined tranport object
         let info = await transporter.sendMail({
-            from: '"Hello There" <abc@gmail.com>', // Sender address
+            from: '"Hello There" <mohmoseyba3@gmail.com>', // Sender address
             to: data.to, // List of receivers
             subject: data.subject, // Subject line
             text: data.text,
-            htm: data.html, // HTML body
+            html: data.html, // HTML body
         })
 
         console.log("Message sent: %s", info.messageId)

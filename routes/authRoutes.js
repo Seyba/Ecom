@@ -10,6 +10,7 @@ const {
     handleTokenRefresh,
     loginUserCtr, 
     logOut,
+    resetPassword,
     unBlockUser,
     updateUser,
     updatePassword
@@ -18,6 +19,7 @@ const {authMiddleware, isAdmin} = require('../middlewares/authMiddleware')
 
 router.put("/password",authMiddleware ,updatePassword)
 router.post("/forgot-password-token", forgotPasswordToken)
+router.put("/reset-password/:token", resetPassword)
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
 router.get("/logout", logOut)
