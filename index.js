@@ -3,7 +3,7 @@ require('dotenv').config()
 const databaseConnection = require('./config/database')
 const logger = require('morgan')
 const authRouter = require('./routes/authRoutes')
-const categoryRouter = require('./routes/categoryRoutes')
+const prodCategoryRouter = require('./routes/categoryRoutes')
 const productRouter = require('./routes/productRoute')
 const blogRouter = require('./routes/blogRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorHandler')
@@ -19,7 +19,7 @@ app.use(cookieParser())
 
 
 app.use('/api/blog', blogRouter)
-app.use('api/category', categoryRouter)
+app.use('/api/prodcategory', prodCategoryRouter)
 app.use('/api/product', productRouter)
 app.use('/api/user', authRouter)
 
