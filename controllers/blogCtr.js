@@ -91,10 +91,31 @@ const likeBlog = asyncHandler(
             )
 
             if(alreadyDisliked) {
-                const blog = await Blog.findByIdAndUpdate(blog, {
+                const blog = await Blog.findByIdAndUpdate(blogId, {
                     $pull: {dislikes: loggedUserId},
                     isDisliked: false
+                },{
+                    new: true
                 })
+                res.json(blog)
+            }
+
+            if(isLiked) {
+                const blog = await Blog.findByIdAndUpdate(blogId, {
+                    $pull: {likes: loggedUserId},
+                    isLiked: false
+                },{
+                    new: true
+                })
+                res.json(blog)
+            } else {
+                const blog = await Blog.findByIdAndUpdate(blogId, {
+                    $push: {likes: loggedUserId},
+                    isLiked: true
+                },{
+                    new: true
+                })
+                res.json(blog)
             }
 
             res.json({msg:'blog deleted'})
