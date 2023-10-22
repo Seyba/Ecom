@@ -36,5 +36,15 @@ const deleteCategory = asyncHandler(
         }
     }
 )
+const getCategories = asyncHandler(
+    async(req, res) => {
+        try {
+            const categories = await ProductCategory.find({})
+            res.json(categories)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
 
-module.exports = {createCategory, deleteCategory, updateCategory}
+module.exports = {createCategory, deleteCategory, getCategories, updateCategory}
