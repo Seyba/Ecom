@@ -49,7 +49,11 @@ var productSchema = new mongoose.Schema({
     ratings: [{
         star: Number,
         postedby: { type: mongoose.Schema.Types.ObjectId, ref: "User"}
-    }]
+    }],
+    totalRating: {
+        type: String,
+        default: 0
+    }
 }, {timestamps: true});
 
 //* to hide a schema document set {select: false}

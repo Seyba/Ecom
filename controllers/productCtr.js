@@ -116,7 +116,7 @@ const addToWishList = asyncHandler(
         const { prodId } = req.body
         try {
             const loggedUser = await User.findById(_id)
-            const prodAlreadyAdded = loggedUser.whishlist.find((id) => id.toString() === prodId)
+            const prodAlreadyAdded = loggedUser.wishlist.find((id) => id.toString() === prodId)
 
             if(prodAlreadyAdded){
                 let user = await User.findByIdAndUpdate(_id, {$pull: {wishlist: prodId}}, {new: true})
@@ -130,11 +130,18 @@ const addToWishList = asyncHandler(
         }
     }
 )
+
+const rating = asyncHandler(
+    async(req, res) => {
+        
+    }
+)
 module.exports = {
     addToWishList,
     createProduct,
     deleteProduct, 
     getProduct, 
     getProducts, 
+    rating,
     updateProduct
 }
