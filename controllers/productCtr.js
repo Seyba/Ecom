@@ -147,19 +147,28 @@ const rating = asyncHandler(
                     {new: true}
                 )
 
-                res.json(updateRating)
+                //res.json(updateRating)
 
             } else {
                 const rateProd = await Product.findByIdAndUpdate(prodId, 
                     {$push: {ratings: {star, postedby: _id}}}, {new: true}
                 )
-                res.json(rateProd)
+                //res.json(rateProd)
             }
+            
+            const getAllRatings = await Product.findById(prodId)
+            let totalRating = getAllRatings.ratings.length
+            let ratingSum = getAllRatings.ratings.map((item) => (item.star)).reduce((prev, curr) => prev + curr, 0)
+            let actualRating = Math.round(ratingSum / totalRating)
+            let finalRating = await Product.findByIdAndUpdate(prodId, {totalRating: actualRating}, {new: true})
+
+            res.json(finalRating)
         } catch (error) {
             throw new Error(error)
         }
     }
 )
+
 module.exports = {
     addToWishList,
     createProduct,
