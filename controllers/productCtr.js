@@ -133,7 +133,31 @@ const addToWishList = asyncHandler(
 
 const rating = asyncHandler(
     async(req, res) => {
-        
+        const { _id } = req.user
+        const { star, prodId} = req.body 
+        try {
+            const product = await Product.findById(prodId)
+            let prodAlreadRated = product.ratings.find((userId) => userId.postedby.toString())
+            
+            if(prodAlreadRated) {
+
+                const updateRating = await Product.updateOne(
+                    {ratings: {$elemMatch: prodAlreadRated }}, 
+                    {$set: {"ratings.$.star": star}},
+                    {new: true}
+                )
+
+                res.json(updateRating)
+
+            } else {
+                const rateProd = await Product.findById(prodId, 
+                    {$push: {ratings: {star: star, postedby: _id}}}, {new: true}
+                )
+                res.json(rateProd)
+            }
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 )
 module.exports = {

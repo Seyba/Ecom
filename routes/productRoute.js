@@ -4,9 +4,10 @@ const { addToWishList, createProduct, deleteProduct, getProduct, getProducts, ra
 const router = express.Router()
 
 router.post("/", authMiddleware, isAdmin, createProduct)
+router.put("/rating", authMiddleware, rating)
+
 router.get("/", getProducts)
 router.put("/wishlist", authMiddleware, addToWishList)
-router.put("/rating", authMiddleware, rating)
 router.get("/:id", getProduct)
 router.put("/:id", authMiddleware, isAdmin, updateProduct)
 router.delete("/:id", authMiddleware, isAdmin, deleteProduct)
