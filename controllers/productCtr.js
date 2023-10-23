@@ -150,8 +150,8 @@ const rating = asyncHandler(
                 res.json(updateRating)
 
             } else {
-                const rateProd = await Product.findById(prodId, 
-                    {$push: {ratings: {star: star, postedby: _id}}}, {new: true}
+                const rateProd = await Product.findByIdAndUpdate(prodId, 
+                    {$push: {ratings: {star, postedby: _id}}}, {new: true}
                 )
                 res.json(rateProd)
             }
