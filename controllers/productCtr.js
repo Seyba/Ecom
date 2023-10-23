@@ -134,7 +134,7 @@ const addToWishList = asyncHandler(
 const rating = asyncHandler(
     async(req, res) => {
         const { _id } = req.user
-        const { star, prodId} = req.body 
+        const { star, prodId, comment} = req.body 
         try {
             const product = await Product.findById(prodId)
             let prodAlreadRated = product.ratings.find((userId) => userId.postedby.toString())
@@ -143,7 +143,7 @@ const rating = asyncHandler(
 
                 const updateRating = await Product.updateOne(
                     {ratings: {$elemMatch: prodAlreadRated }}, 
-                    {$set: {"ratings.$.star": star}},
+                    {$set: {"ratings.$.star": star, "ratings.$.comment": comment}},
                     {new: true}
                 )
 
@@ -151,12 +151,13 @@ const rating = asyncHandler(
 
             } else {
                 const rateProd = await Product.findByIdAndUpdate(prodId, 
-                    {$push: {ratings: {star, postedby: _id}}}, {new: true}
+                    {$push: {ratings: {star: star, comment: comment, postedby: _id}}}, {new: true}
                 )
                 //res.json(rateProd)
             }
             
             const getAllRatings = await Product.findById(prodId)
+
             let totalRating = getAllRatings.ratings.length
             let ratingSum = getAllRatings.ratings.map((item) => (item.star)).reduce((prev, curr) => prev + curr, 0)
             let actualRating = Math.round(ratingSum / totalRating)
