@@ -2,7 +2,7 @@ const Brand = require('../models/brandModel')
 const asyncHandler = require('express-async-handler')
 const {validateMongoDbId} = require('../utils/validateMongodbId')
 
-const createCategory = asyncHandler(
+const createBrand = asyncHandler(
     async(req, res) => {
         try {
             const newCat = await Brand.create(req.body)
@@ -13,7 +13,7 @@ const createCategory = asyncHandler(
     }
 )
 
-const updateCategory = asyncHandler(
+const updateBrand = asyncHandler(
     async(req, res) => {
         const { id } = req.params
         try {
@@ -25,7 +25,7 @@ const updateCategory = asyncHandler(
     }
 )
 
-const deleteCategory = asyncHandler(
+const deleteBrand = asyncHandler(
     async(req, res) => {
         const { id } = req.params
         try {
@@ -36,7 +36,7 @@ const deleteCategory = asyncHandler(
         }
     }
 )
-const getCategories = asyncHandler(
+const getBrands = asyncHandler(
     async(req, res) => {
         try {
             const categories = await Brand.find({})
@@ -47,7 +47,7 @@ const getCategories = asyncHandler(
     }
 )
 
-const getCategory = asyncHandler(
+const getBrand = asyncHandler(
     async(req, res) => {
         const { id } = req.params
         try {
@@ -60,4 +60,4 @@ const getCategory = asyncHandler(
 )
 
 
-module.exports = {createCategory, deleteCategory, getCategories,getCategory, updateCategory}
+module.exports = {createBrand, deleteBrand, getBrands, getBrand, updateBrand}
