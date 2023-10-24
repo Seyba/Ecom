@@ -25,39 +25,39 @@ const createCoupon = asyncHandler(
 //     }
 // )
 
-// const deleteBrand = asyncHandler(
-//     async(req, res) => {
-//         const { id } = req.params
-//         try {
-//             const category = await Brand.findByIdAndDelete(id)
-//             res.json({msg: "Category deleted!"})
-//         } catch (error) {
-//             throw new Error(error)
-//         }
-//     }
-// )
-// const getBrands = asyncHandler(
-//     async(req, res) => {
-//         try {
-//             const categories = await Brand.find({})
-//             res.json(categories)
-//         } catch (error) {
-//             throw new Error(error)
-//         }
-//     }
-// )
+const deleteCoupon = asyncHandler(
+    async(req, res) => {
+        const { id } = req.params
+        try {
+            const coupon = await Coupon.findByIdAndDelete(id)
+            res.json({msg: "Coupon deleted!"})
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+const getCoupons = asyncHandler(
+    async(req, res) => {
+        try {
+            const  coupons = await Coupon.find({})
+            res.json(coupons)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
 
-// const getBrand = asyncHandler(
-//     async(req, res) => {
-//         const { id } = req.params
-//         try {
-//             const category = await Brand.findById(id)
-//             res.json(category)
-//         } catch (error) {
-//             throw new Error(error)
-//         }
-//     }
-// )
+const getCoupon = asyncHandler(
+    async(req, res) => {
+        const { id } = req.params
+        try {
+            const coupon = await Coupon.findById(id)
+            res.json(coupon)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
 
 
-module.exports = {createCoupon, }//deleteBrand, getBrands, getBrand, updateBrand}
+module.exports = {createCoupon, deleteCoupon, getCoupon, getCoupons}
