@@ -20,7 +20,6 @@ app.use(express.json());
 app.use(logger('dev'))
 app.use(cookieParser())
 
-
 app.use('/api/blog', blogRouter)
 app.use('/api/blogcategory', blogCategoryRouter)
 app.use('/api/coupon', couponRouter)
