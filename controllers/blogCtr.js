@@ -181,17 +181,18 @@ const uploadImages = asyncHandler(
             const uploader = path => cloudinaryUploadImg(path, "images")
             const urls = []
             const files = req.files
+
             for(const file of files ) {
                 const { path } = file
                 const newPath = await uploader(path)
                 urls.push(newPath)
             }
-            const product = await Product.findByIdAndUpdate(
+            const blog = await Blog.findByIdAndUpdate(
                 id,
                 {images: urls.map((file => file))},
                 {new: true}
             )
-            res.json(product)
+            res.json(blog)
         } catch (error) {
             throw new Error(error)
         }
