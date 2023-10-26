@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { 
+    adminLogin,
     blockUser,
     createUser, 
     deleteUser,
@@ -19,6 +20,7 @@ const {authMiddleware, isAdmin} = require('../middlewares/authMiddleware')
 
 router.put("/password",authMiddleware ,updatePassword)
 router.post("/forgot-password-token", forgotPasswordToken)
+router.post("/admin-login", adminLogin)
 router.put("/reset-password/:token", resetPassword)
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)

@@ -65,6 +65,43 @@ const loginUserCtr = asyncHandler(
     }
 )
 
+//* Admin Login
+const adminLogin = asyncHandler(
+    async(req, res)=> {
+        const { email, password} = req.body
+
+        //* check for user
+        const admin = await User.findOne({email})
+
+        if(admin.role !== 'admin') throw new Error('Not Authorized!')
+
+        if(admin && admin.isPasswordMatched(password)){
+            const refreshToken = await generateNewToken(admin?._id)
+            const updateUser = await User.findByIdAndUpdate(
+                admin._id, 
+                {refreshToken: refreshToken}, 
+                {new: true}
+            )
+
+            res.cookie('refreshToken', refreshToken, {
+                httpOnly: true,
+                maxAge: 72 * 60 * 60 * 1000
+            })
+            res.json({
+                _id: admin?._id,
+                firstname: admin.firstname,
+                lastname: admin.lastname,
+                email: admin.email,
+                mobile: admin.mobile,
+                token: generateToken(admin?._id)
+            })
+        } else {
+            throw new Error('Invalid Credentials')
+        }
+    }
+)
+
+
 //* Log Out the User
 const logOut = asyncHandler(
     async(req, res) => {
@@ -278,6 +315,7 @@ const resetPassword = asyncHandler(
 )
 
 module.exports = {
+    adminLogin,
     blockUser,
     createUser, 
     deleteUser,
