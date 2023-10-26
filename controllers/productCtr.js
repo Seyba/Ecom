@@ -184,7 +184,6 @@ const uploadImages = asyncHandler(
             for(const file of files ) {
                 const { path } = file
                 const newPath = await uploader(path)
-                console.log(newPath)
                 urls.push(newPath)
             }
             const product = await Product.findByIdAndUpdate(
