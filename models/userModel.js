@@ -61,7 +61,7 @@ userModel.pre("save", async function(next){
 
 userModel.methods.isPasswordMatched = async function(enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password, function(result){
-        result
+        return result
     })
 }
 
