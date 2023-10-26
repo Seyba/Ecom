@@ -2,6 +2,7 @@ const Blog = require('../models/blogModel')
 const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 const {validateMongoDbId} = require('../utils/validateMongodbId')
+const cloudinaryUploadImg = require('../utils/cloudinary')
 
 const createBlog = asyncHandler(
     async(req, res) => {
@@ -171,4 +172,39 @@ const dislikeBlog = asyncHandler(
     }
 )
 
-module.exports = { createBlog, deleteBlog, dislikeBlog, getBlog, getBlogs, likeBlog, updateBlog }
+const uploadImages = asyncHandler(
+    
+    async(req, res) => {
+        const { id } = req.params
+        validateMongoDbId(id)
+        try {
+            const uploader = path => cloudinaryUploadImg(path, "images")
+            const urls = []
+            const files = req.files
+            for(const file of files ) {
+                const { path } = file
+                const newPath = await uploader(path)
+                urls.push(newPath)
+            }
+            const product = await Product.findByIdAndUpdate(
+                id,
+                {images: urls.map((file => file))},
+                {new: true}
+            )
+            res.json(product)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
+module.exports = { 
+    createBlog, 
+    deleteBlog, 
+    dislikeBlog, 
+    getBlog, 
+    getBlogs, 
+    likeBlog, 
+    updateBlog, 
+    uploadImages 
+}
