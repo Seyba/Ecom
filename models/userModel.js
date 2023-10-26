@@ -55,14 +55,12 @@ userModel.pre("save", async function(next){
     if(!this.isModified('password')) {
         next()
     }
-    const salt = await bcrypt.genSaltSync(10)
+    const salt = bcrypt.genSaltSync(10)
     this.password = await bcrypt.hash(this.password, salt)
 })
 
 userModel.methods.isPasswordMatched = async function(enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password, function(result){
-        return result
-    })
+    return await bcrypt.compare(enteredPassword, this.password)
 }
 
 userModel.methods.createPasswordResetToken = async function(){

@@ -6,6 +6,7 @@ const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 const sendEmail = require('../controllers/emailCtr')
 const crypto = require('crypto')
+const bcrypt = require('bcrypt')
 
 const createUser = asyncHandler(
     async (req, res) => {
@@ -38,8 +39,11 @@ const loginUserCtr = asyncHandler(
 
         //* check for user
         const user = await User.findOne({email})
+        const match = await bcrypt.compare(password, user.password)
 
-        if(user && user.isPasswordMatched(password)){
+        if(!user) throw new Error("No User Found!")
+
+        if(user && match){
             const refreshToken = await generateNewToken(user?._id)
             const updateUser = await User.findByIdAndUpdate(
                 user._id, 
@@ -72,10 +76,11 @@ const adminLogin = asyncHandler(
 
         //* check for user
         const admin = await User.findOne({email})
+        const match = await bcrypt.compare(password, admin.password)
 
         if(admin.role !== 'admin') throw new Error('Not Authorized!')
 
-        if(admin && admin.isPasswordMatched(password)){
+        if(admin && match){
             const refreshToken = await generateNewToken(admin?._id)
             const updateUser = await User.findByIdAndUpdate(
                 admin._id, 
