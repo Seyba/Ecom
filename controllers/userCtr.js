@@ -319,6 +319,19 @@ const resetPassword = asyncHandler(
     }
 )
 
+const getWishList = asyncHandler(
+
+    async(req, res) => {
+        const { _id } = req.user
+        try {
+            const user = User.findById(_id)
+            res.json(user)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
 module.exports = {
     adminLogin,
     blockUser,
@@ -327,6 +340,7 @@ module.exports = {
     forgotPasswordToken,
     getUser, 
     getUsers, 
+    getWishList,
     handleTokenRefresh,
     loginUserCtr, 
     logOut,
