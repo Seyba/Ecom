@@ -364,6 +364,7 @@ module.exports = {
     loginUserCtr, 
     logOut,
     resetPassword,
+    saveAddress,
     unBlockUser,
     updateUser,
     updatePassword

@@ -13,6 +13,7 @@ const {
     loginUserCtr, 
     logOut,
     resetPassword,
+    saveAddress,
     unBlockUser,
     updateUser,
     updatePassword
@@ -29,6 +30,7 @@ router.get("/logout", logOut)
 router.get("/all-users", getUsers)
 router.get("/refresh", handleTokenRefresh)
 router.get("/wishlist", authMiddleware, getWishList)
+router.put("/save-address", authMiddleware, saveAddress)
 router.get("/:id", authMiddleware, isAdmin, getUser)
 router.delete("/:id", deleteUser)
 router.put("/edit-user", authMiddleware, updateUser)
