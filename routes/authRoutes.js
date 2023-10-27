@@ -16,11 +16,13 @@ const {
     saveAddress,
     unBlockUser,
     updateUser,
-    updatePassword
+    updatePassword,
+    userCart
 } = require('../controllers/userCtr')
 const {authMiddleware, isAdmin} = require('../middlewares/authMiddleware')
 
 router.put("/password",authMiddleware ,updatePassword)
+router.post("/cart", userCart)
 router.post("/forgot-password-token", forgotPasswordToken)
 router.post("/admin-login", adminLogin)
 router.put("/reset-password/:token", resetPassword)

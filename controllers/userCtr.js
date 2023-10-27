@@ -1,6 +1,8 @@
 const { generateToken } = require('../config/jwttoken')
 const {generateNewToken} = require('../config/refreshToken')
 const User = require('../models/userModel')
+const Product = require('../models/productModel')
+const Cart = require('../models/cartModel')
 const {validateMongoDbId} = require('../utils/validateMongodbId')
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
@@ -351,6 +353,41 @@ const saveAddress = asyncHandler(
 
     }
 )
+
+const userCart = asyncHandler(
+    async(req, res, next) => {
+        const { cart } = req.body
+        const { _id } = req.user
+        validateMongoDbId(_id)
+        
+        
+        try {
+            let products = []
+            const user = User.findById(_id)
+            
+            //* Check if user already has items in cart
+            const alreadyExist = await Cart.findOne({orderBy: user._id})
+            if(alreadyExist){
+                alreadyExist.remove()
+            }
+
+            for(let i = 0; i< cart.length; i++){
+                let object = {}
+                object.product = cart[i]._id
+                object.color = cart[i].colord
+                object.count = cart[i].count
+
+                let getPrice = await Product.findById(cart[i]._id).select("price").exec()
+                object.price = getPrice.price
+                products.push(object)
+
+                console.log(object)
+            }
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
 module.exports = {
     adminLogin,
     blockUser,
@@ -367,5 +404,6 @@ module.exports = {
     saveAddress,
     unBlockUser,
     updateUser,
-    updatePassword
+    updatePassword,
+    userCart
 }
