@@ -319,12 +319,13 @@ const resetPassword = asyncHandler(
     }
 )
 
+//* List All Products Added as wish list
 const getWishList = asyncHandler(
 
     async(req, res) => {
         const { _id } = req.user
         try {
-            const user = User.findById(_id)
+            const user = await User.findById(_id).populate("wishlist")
             res.json(user)
         } catch (error) {
             throw new Error(error)
@@ -332,6 +333,24 @@ const getWishList = asyncHandler(
     }
 )
 
+//* Save User's Address
+const saveAddress = asyncHandler(
+    async(req, res, next) => {
+        const {_id } = req.user
+        validateMongoDbId(_id)
+        try{
+            const user = await User.findByIdAndUpdate(
+                _id, 
+                {address: req?.body?.address}, 
+                {new: true}
+            )
+            res.json(user)
+        }catch(e){
+            throw new Error(error)
+        }
+
+    }
+)
 module.exports = {
     adminLogin,
     blockUser,
