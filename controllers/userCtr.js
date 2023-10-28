@@ -371,18 +371,19 @@ const userCart = asyncHandler(
                 alreadyExist.remove()
             }
 
-            for(let i = 0; i< cart.length; i++){
+            for(let i = 0; i < cart.length; i++){
                 let object = {}
                 object.product = cart[i]._id
-                object.color = cart[i].colord
+                object.color = cart[i].color
                 object.count = cart[i].count
 
                 let getPrice = await Product.findById(cart[i]._id).select("price").exec()
                 object.price = getPrice.price
                 products.push(object)
 
-                console.log(object)
+                
             }
+            console.log(products)
         } catch (error) {
             throw new Error(error)
         }
