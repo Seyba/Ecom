@@ -5,11 +5,12 @@ const {
     blockUser,
     createUser, 
     deleteUser,
+    emptyCart,
+    forgotPasswordToken,
     getUserCart,
     getUser, 
     getUsers, 
     getWishList,
-    forgotPasswordToken,
     handleTokenRefresh,
     loginUserCtr, 
     logOut,
@@ -30,6 +31,7 @@ router.put("/reset-password/:token", resetPassword)
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
 router.get("/logout", logOut)
+router.delete("/empty-cart", authMiddleware, emptyCart)
 router.get("/cart", authMiddleware, getUserCart)
 router.get("/all-users", getUsers)
 router.get("/refresh", handleTokenRefresh)
