@@ -74,5 +74,5 @@ userModel.methods.createPasswordResetToken = async function(){
     this.passwordResetExpires = Date.now() + 30 * 60 * 1000 //? 10 minutes
     return resetToken
 }
-const User = model('User', userModel)
+const User = model("User", userModel)
 module.exports = User

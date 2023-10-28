@@ -356,7 +356,7 @@ const saveAddress = asyncHandler(
 )
 
 const userCart = asyncHandler(
-    async(req, res, next) => {
+    async(req, res) => {
         const { cart } = req.body
         const { _id } = req.user
         validateMongoDbId(_id)
@@ -364,10 +364,10 @@ const userCart = asyncHandler(
         
         try {
             let products = []
-            const user = User.findById(_id)
+            const user = await User.findById(_id)
             
             //* Check if user already has items in cart
-            const alreadyExist = await Cart.findOne({orderBy: user._id})
+            const alreadyExist = await Cart.findOne({orderby: user._id})
             if(alreadyExist){
                 alreadyExist.remove()
             }
@@ -393,9 +393,8 @@ const userCart = asyncHandler(
             let newCart = await new Cart({
                 products,
                 cartTotal,
-                orderBy: user?._id
+                orderby: user?._id
             }).save()
-
             res.json(newCart)
         } catch (error) {
             throw new Error(error)
@@ -408,7 +407,8 @@ const getUserCart = asyncHandler(
         const { _id } = req.user
         validateMongoDbId(_id)
         try {
-            const cart = await Cart.findOne({orderBy: _id})
+            const cart = await Cart.findOne({orderby: _id})
+            console.log(_id)
             res.json(cart)
         } catch (error) {
             throw new Error(error)
