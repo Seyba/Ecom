@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../controllers/emailCtr')
 const crypto = require('crypto')
 const bcrypt = require('bcrypt')
+const { log } = require('console')
 
 const createUser = asyncHandler(
     async (req, res) => {
@@ -380,22 +381,49 @@ const userCart = asyncHandler(
                 let getPrice = await Product.findById(cart[i]._id).select("price").exec()
                 object.price = getPrice.price
                 products.push(object)
-
                 
             }
-            console.log(products)
+
+            let cartTotal = 0
+
+            for (let i = 0; i < products.length; i++) {
+                cartTotal = cartTotal + products[i].price * products[i].count
+            }
+
+            let newCart = await new Cart({
+                products,
+                cartTotal,
+                orderBy: user?._id
+            }).save()
+
+            res.json(newCart)
         } catch (error) {
             throw new Error(error)
         }
     }
 )
+
+const getUserCart = asyncHandler(
+    async(req, res) => {
+        const { _id } = req.user
+        validateMongoDbId(_id)
+        try {
+            const cart = await Cart.findOne({orderBy: _id})
+            res.json(cart)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
 module.exports = {
     adminLogin,
     blockUser,
     createUser, 
     deleteUser,
     forgotPasswordToken,
-    getUser, 
+    getUser,
+    getUserCart, 
     getUsers, 
     getWishList,
     handleTokenRefresh,
