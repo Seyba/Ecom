@@ -513,7 +513,7 @@ const getOrders = asyncHandler(
         validateMongoDbId(_id)
 
         try {
-            const userOrders = await Order.findOne({orderBy:_id}) 
+            const userOrders = await Order.findOne({orderBy:_id}).populate('products.product').exec()
             res.json(userOrders)
         } catch (error) {
             throw new Error(error)
@@ -521,6 +521,12 @@ const getOrders = asyncHandler(
     }
 )
 
+
+const updateOrderStatus = asyncHandler(
+    async(req, res) => {
+        
+    }
+)
 module.exports = {
     adminLogin,
     applyCoupon,
