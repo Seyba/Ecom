@@ -484,7 +484,7 @@ const createOrder = asyncHandler(
                     created: Date.now(),
                     currency: "USD",
                 },
-                orderby: user._id,
+                orderBy: user._id,
                 orderStatus: "Cash on Delivery"
             }).save()
             let update = userCart.products.map(
