@@ -2,6 +2,7 @@ const { generateToken } = require('../config/jwttoken')
 const {generateNewToken} = require('../config/refreshToken')
 const User = require('../models/userModel')
 const Product = require('../models/productModel')
+const Coupon = require('../models/couponModel')
 const Cart = require('../models/cartModel')
 const {validateMongoDbId} = require('../utils/validateMongodbId')
 const asyncHandler = require('express-async-handler')
@@ -432,8 +433,27 @@ const emptyCart = asyncHandler(
     }
 )
 
+const applyCoupon = asyncHandler(
+    async(req, res) => {
+        const { coupon } = req.body
+        const validCoupon = await Coupon.findOne({name: coupon})
+        console.log(validCoupon)
+        // const { _id } = req.user
+        // validateMongoDbId(_id)
+
+        // try {
+        //     const user = await User.findOne({_id})
+        //     const cart = await Cart.findOneAndRemove({orderby: user._id})
+        //     res.json(cart)
+        // } catch (error) {
+        //     throw new Error(error)
+        // }
+    }
+)
+
 module.exports = {
     adminLogin,
+    applyCoupon,
     blockUser,
     createUser, 
     deleteUser,

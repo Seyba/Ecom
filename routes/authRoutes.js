@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { 
     adminLogin,
+    applyCoupon,
     blockUser,
     createUser, 
     deleteUser,
@@ -30,6 +31,7 @@ router.post("/admin-login", adminLogin)
 router.put("/reset-password/:token", resetPassword)
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
+router.post("/cart/applycoupon", authMiddleware, applyCoupon)
 router.get("/logout", logOut)
 router.delete("/empty-cart", authMiddleware, emptyCart)
 router.get("/cart", authMiddleware, getUserCart)
