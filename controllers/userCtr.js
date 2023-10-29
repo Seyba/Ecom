@@ -485,7 +485,7 @@ const createOrder = asyncHandler(
                     currency: "USD",
                 },
                 orderby: user._id,
-                orderStatus: "Cash On Delivery"
+                orderStatus: "Cash on Delivery"
             }).save()
             let update = userCart.products.map(
                 (item) => {
@@ -499,7 +499,7 @@ const createOrder = asyncHandler(
             )
 
             const updated = await Product.bulkWrite(update, {})
-            res.json({message: success})
+            res.json({message: 'success'})
         } catch (error) {
             throw new Error(error)
         }

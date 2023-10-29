@@ -4,6 +4,7 @@ const {
     adminLogin,
     applyCoupon,
     blockUser,
+    createOrder,
     createUser, 
     deleteUser,
     emptyCart,
@@ -29,6 +30,7 @@ router.post("/cart", authMiddleware, userCart)
 router.post("/forgot-password-token", forgotPasswordToken)
 router.post("/admin-login", adminLogin)
 router.put("/reset-password/:token", resetPassword)
+router.post("/cart/cash-order", authMiddleware, createOrder)
 router.post("/register", createUser)
 router.post("/login", loginUserCtr)
 router.post("/cart/applycoupon", authMiddleware, applyCoupon)
