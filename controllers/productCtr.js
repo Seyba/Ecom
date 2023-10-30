@@ -2,7 +2,7 @@ const Product = require('../models/productModel')
 const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 const slugify = require('slugify')
-const cloudinaryUploadImg = require('../utils/cloudinary')
+const {cloudinaryUploadImg, cloudinaryDeleteImg} = require('../utils/cloudinary')
 const {validateMongoDbId} = require('../utils/validateMongodbId.js')
 const fs = require('fs')
 
@@ -173,6 +173,22 @@ const rating = asyncHandler(
     }
 )
 
+const deleteImages = asyncHandler(
+    
+
+    async(req, res) => {
+        const { id } = req.params
+        try {
+            const deleter = cloudinaryDeleteImg(id, "images")
+
+            res.json({msg: 'Deleted!'})
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
+
 const uploadImages = asyncHandler(
     
     async(req, res) => {
@@ -203,9 +219,11 @@ const uploadImages = asyncHandler(
     }
 )
 
+
 module.exports = {
     addToWishList,
     createProduct,
+    deleteImages,
     deleteProduct, 
     getProduct, 
     getProducts, 
