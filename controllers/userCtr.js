@@ -4,7 +4,7 @@ const uniqid = require('uniqid')
 const User = require('../models/userModel')
 const Product = require('../models/productModel')
 const Coupon = require('../models/couponModel')
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 const Cart = require('../models/cartModel')
 const {validateMongoDbId} = require('../utils/validateMongodbId')
 const asyncHandler = require('express-async-handler')
@@ -524,9 +524,19 @@ const getOrders = asyncHandler(
 
 const updateOrderStatus = asyncHandler(
     async(req, res) => {
-        
+        const { status } = req.body
+        const { id } = req.params
+        validateMongoDbId(id)
+
+        const order = Order.findByIdAndUpdate(
+            id, 
+            {orderStatus: status, paymentIntent:{status: status}}, 
+            {new: true}
+        )
+        res.json(order)
     }
 )
+
 module.exports = {
     adminLogin,
     applyCoupon,
@@ -547,6 +557,7 @@ module.exports = {
     resetPassword,
     saveAddress,
     unBlockUser,
+    updateOrderStatus,
     updateUser,
     updatePassword,
     userCart

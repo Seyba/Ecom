@@ -20,6 +20,7 @@ const {
     resetPassword,
     saveAddress,
     unBlockUser,
+    updateOrderStatus,
     updateUser,
     updatePassword,
     userCart
@@ -43,6 +44,7 @@ router.get("/refresh", handleTokenRefresh)
 router.get("/wishlist", authMiddleware, getWishList)
 router.get("/get-orders", authMiddleware, getOrders)
 router.put("/save-address", authMiddleware, saveAddress)
+router.put("/order/update-order/:id", authMiddleware, isAdmin, updateOrderStatus)
 router.get("/:id", authMiddleware, isAdmin, getUser)
 router.delete("/:id", deleteUser)
 router.put("/edit-user", authMiddleware, updateUser)
