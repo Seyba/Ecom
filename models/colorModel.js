@@ -8,7 +8,7 @@ const colorSchema = new Schema({
         unique: true,
         index: true
     }
-})
+}, {timestamps: true})
 
 const Color = model('Color', colorSchema)
 module.exports = Color
