@@ -6,7 +6,7 @@ const router = express.Router()
 
 
 router.post("/", authMiddleware, isAdmin, createProduct)
-router.put("/upload/:id", authMiddleware, isAdmin, uploadPhoto.array("images", 10),productImgResize, uploadImages)
+router.put("/upload", authMiddleware, isAdmin, uploadPhoto.array("images", 10),productImgResize, uploadImages)
 router.put("/rating", authMiddleware, rating)
 router.get("/", getProducts)
 router.put("/wishlist", authMiddleware, addToWishList)
