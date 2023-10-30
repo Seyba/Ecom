@@ -176,8 +176,6 @@ const dislikeBlog = asyncHandler(
 const uploadImages = asyncHandler(
     
     async(req, res) => {
-        const { id } = req.params
-        validateMongoDbId(id)
         try {
             const uploader = path => cloudinaryUploadImg(path, "images")
             const urls = []
@@ -189,12 +187,10 @@ const uploadImages = asyncHandler(
                 urls.push(newPath)
                 fs.unlinkSync(path)
             }
-            const blog = await Blog.findByIdAndUpdate(
-                id,
-                {images: urls.map((file => file))},
-                {new: true}
-            )
-            res.json(blog)
+
+            const images = urls.map(file => file)
+            
+            res.json(images)
         } catch (error) {
             throw new Error(error)
         }
