@@ -13,6 +13,20 @@ const createEnquiry = asyncHandler(
     }
 )
 
+const updateEnquiry = asyncHandler(
+    async(req, res) => {
+        const { id } = req.params
+        validateMongoDbId(id)
+        try {
+            const enquiry = await Enquiry.findByIdAndUpdate(id, req.body, {new: true})
+            res.json(enquiry)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
+
 const deleteEnquiry = asyncHandler(
     async(req, res) => {
         const { id } = req.params
@@ -48,4 +62,4 @@ const getEnquiry = asyncHandler(
 )
 
 
-module.exports = {createEnquiry, deleteEnquiry, getEnquiries, getEnquiry}
+module.exports = {createEnquiry, deleteEnquiry, getEnquiries, getEnquiry, updateEnquiry}
