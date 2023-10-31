@@ -2,7 +2,7 @@ const Blog = require('../models/blogModel')
 const User = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 const {validateMongoDbId} = require('../utils/validateMongodbId')
-const {cloudinaryUploadImg, cloudinaryDeleteImg} = require('../utils/cloudinary')
+const cloudinaryUploadImg = require('../utils/cloudinary')
 const fs = require('fs')
 
 const createBlog = asyncHandler(
@@ -176,6 +176,8 @@ const dislikeBlog = asyncHandler(
 const uploadImages = asyncHandler(
     
     async(req, res) => {
+        const { id } = req.params
+        validateMongoDbId(id)
         try {
             const uploader = path => cloudinaryUploadImg(path, "images")
             const urls = []
@@ -187,36 +189,23 @@ const uploadImages = asyncHandler(
                 urls.push(newPath)
                 fs.unlinkSync(path)
             }
-
-            const images = urls.map(file => file)
-            
-            res.json(images)
+            const blog = await Blog.findByIdAndUpdate(
+                id,
+                {images: urls.map((file => file))},
+                {new: true}
+            )
+            res.json(blog)
         } catch (error) {
             throw new Error(error)
         }
     }
 )
 
-const deleteImages = asyncHandler(
-    
-    async(req, res) => {
-        const { id } = req.params
-        validateMongoDbId(id)
-        try {
-            const remover = cloudinaryDeleteImg(id, "images")
-            
-            res.json({msg: 'Deleted!'})
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-)
 
 
 module.exports = { 
     createBlog, 
     deleteBlog, 
-    deleteImages,
     dislikeBlog, 
     getBlog, 
     getBlogs, 
