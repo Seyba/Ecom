@@ -11,13 +11,18 @@ const enquirySchema = new Schema({
         required: true,
     },
     mobile: {
-        type: String,
+        type: Number,
         required: true
     },
     comment: {
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        default: "Submitted",
+        enum: ["Submitted","Contacted","In Progress"]
+    }
 
 }, {timestamps: true})
 

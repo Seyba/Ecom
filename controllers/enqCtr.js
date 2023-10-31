@@ -18,7 +18,7 @@ const deleteEnquiry = asyncHandler(
         const { id } = req.params
         try {
             const enquiry = await Enquiry.findByIdAndDelete(id)
-            res.json({msg: "Color deleted!"})
+            res.json({msg: "Enquiry deleted!"})
         } catch (error) {
             throw new Error(error)
         }
