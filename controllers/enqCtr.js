@@ -13,7 +13,6 @@ const createEnquiry = asyncHandler(
     }
 )
 
-
 const deleteEnquiry = asyncHandler(
     async(req, res) => {
         const { id } = req.params
