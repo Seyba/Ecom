@@ -502,8 +502,7 @@ const createOrder = asyncHandler(
             res.json({message: 'success'})
         } catch (error) {
             throw new Error(error)
-        }
-        
+        }        
     }
 )
 
@@ -513,8 +512,24 @@ const getOrders = asyncHandler(
         validateMongoDbId(_id)
 
         try {
-            const userOrders = await Order.findOne({orderBy:_id}).populate('products.product').exec()
+            const userOrders = await Order.findOne({orderBy:_id})
+                .populate('products.product').populate('orderBy')
+                .exec()
             res.json(userOrders)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+)
+
+const getAllOrders = asyncHandler(
+    async(req, res) => {
+
+        try {
+            const allOrders = await Order.find()
+                .populate('products.product').populate('orderBy')
+                .exec()
+            res.json(allOrders)
         } catch (error) {
             throw new Error(error)
         }
@@ -550,6 +565,7 @@ module.exports = {
     deleteUser,
     emptyCart,
     forgotPasswordToken,
+    getAllOrders,
     getOrders,
     getUser,
     getUserCart, 

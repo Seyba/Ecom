@@ -13,6 +13,7 @@ const productRouter = require('./routes/productRoute')
 const blogRouter = require('./routes/blogRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorHandler')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -21,6 +22,7 @@ const PORT = process.env.PORT || 4000
 app.use(express.json());
 app.use(logger('dev'))
 app.use(cookieParser())
+app.use(cors())
 
 app.use('/api/blog', blogRouter)
 app.use('/api/blogcategory', blogCategoryRouter)
