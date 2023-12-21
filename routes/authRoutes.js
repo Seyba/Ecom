@@ -9,6 +9,7 @@ const {
     deleteUser,
     emptyCart,
     forgotPasswordToken,
+    getAllOrders,
     getOrders,
     getUserCart,
     getUser, 
@@ -43,6 +44,7 @@ router.get("/all-users", getUsers)
 router.get("/refresh", handleTokenRefresh)
 router.get("/wishlist", authMiddleware, getWishList)
 router.get("/get-orders", authMiddleware, getOrders)
+router.get("/get-allOrders", authMiddleware, isAdmin, getAllOrders)
 router.put("/save-address", authMiddleware, saveAddress)
 router.put("/order/update-order/:id", authMiddleware, isAdmin, updateOrderStatus)
 router.get("/:id", authMiddleware, isAdmin, getUser)
