@@ -1,6 +1,6 @@
 const express = require('express')
 const {isAdmin, authMiddleware} = require('../middlewares/authMiddleware')
-const { addToWishList, createProduct, deleteImages, deleteProduct, getProduct, getProducts, rating, updateProduct, uploadImages } = require('../controllers/productCtr')
+const { addToWishList, createProduct, deleteProduct, getProduct, getProducts, rating, updateProduct } = require('../controllers/productCtr')
 const { uploadPhoto, productImgResize } = require('../middlewares/uploadImages')
 const router = express.Router()
 
