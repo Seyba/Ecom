@@ -6,8 +6,8 @@ const router = express.Router()
 
 
 router.post("/", authMiddleware, isAdmin, createProduct)
-router.put("/upload", authMiddleware, isAdmin, uploadPhoto.array("images", 10),productImgResize, uploadImages)
-router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages)
+//router.put("/upload", authMiddleware, isAdmin, uploadPhoto.array("images", 10),productImgResize, uploadImages)
+//router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages)
 
 router.put("/rating", authMiddleware, rating)
 router.get("/", getProducts)
